@@ -43,32 +43,66 @@ let products = [{
  * @param {HTMLElement} container 
  */
 function productsList(list, container, showQty = false) {
-    list.forEach(product => {
-        // Create a table row for the product
-        const row = document.createElement('tr');
-        container.appendChild(row);
+    if (showQty) {
+        list.forEach(product => {
+            if (product.quantity > 0) {
+                // Create a table row for the product
+                const row = document.createElement('tr');
+                container.appendChild(row);
 
-        // Create the columns
-        const id = document.createElement('td');
-        const name = document.createElement('td');
-        const price = document.createElement('td');
-        const select = document.createElement('td');
-        const quantity = document.createElement('td');
+                // Create the columns
+                const id = document.createElement('td');
+                const name = document.createElement('td');
+                const price = document.createElement('td');
+                const select = document.createElement('td');
 
-        // Fill in the columns with the product details
-        id.innerText = product.id;
-        name.innerText = product.name;
-        price.innerText = product.price;
-        quantity.innerText = product.quantity;
-        quantity.setAttribute('data-id', product.id);
+                // Fill in the columns with the product details
+                id.innerText = product.id;
+                name.innerText = product.name;
+                price.innerText = product.price;
 
 
-        // Append the columns to the row
-        row.appendChild(id);
-        row.appendChild(name);
-        row.appendChild(price);
+                // Append the columns to the row
+                row.appendChild(id);
+                row.appendChild(name);
+                row.appendChild(price);
 
-        if (!showQty) {
+                // Add quantity
+                const quantity = document.createElement('td');
+                quantity.innerText = product.quantity;
+                quantity.setAttribute('data-id', product.id);
+                row.appendChild(quantity);
+            }
+        })
+    } else {
+        list.forEach(product => {
+            // Create a table row for the product
+            const row = document.createElement('tr');
+            container.appendChild(row);
+
+            // Create the columns
+            const id = document.createElement('td');
+            const name = document.createElement('td');
+            const price = document.createElement('td');
+            const select = document.createElement('td');
+
+            // Fill in the columns with the product details
+            id.innerText = product.id;
+            name.innerText = product.name;
+            price.innerText = product.price;
+
+
+            // Append the columns to the row
+            row.appendChild(id);
+            row.appendChild(name);
+            row.appendChild(price);
+
+            // Add quantity
+            const quantity = document.createElement('td');
+            quantity.innerText = product.quantity;
+            quantity.setAttribute('data-id', product.id);
+            row.appendChild(quantity);
+
             // Add a column to add product to the cart
             const addToCart = document.createElement('input');
             addToCart.setAttribute('type', 'button');
@@ -86,10 +120,10 @@ function productsList(list, container, showQty = false) {
             select.appendChild(removeFromCart);
 
             row.appendChild(select);
-        } 
 
-        row.appendChild(quantity);
-    });
+        })
+
+    }
 }
 
 
@@ -140,30 +174,33 @@ changeCart.forEach(btn => {
 function validateCmd() {
     let cmdContainer = document.querySelectorAll(".recapCmd");
 
-    // Get datas content of the cart
-    let cmd = JSON.parse(sessionStorage.getItem("cart"));
-    let totalCart = 0;
-    console.log(cmd);
+    if ((cmdContainer[0].getElementsByTagName('h2')).length == 0) {
 
-    // Add title
-    let title = document.createElement('h2');
-    title.innerText = "Récapitulatif de votre commande : ";
-    cmdContainer[0].appendChild(title);
+        // Get datas content of the cart
+        let cmd = JSON.parse(sessionStorage.getItem("cart"));
+        let totalCart = 0;
+        console.log(cmd);
 
-    // Add a list to display cart elements
-    let ul = document.createElement('ul');
-    cmdContainer[0].appendChild(ul);
-    cmd.forEach(item => {
-        if (item.quantity > 0) {
-            let li = document.createElement('li');
-            li.innerText = `${item.name} - ${item.price} euros X ${item.quantity}\n`
-            ul.appendChild(li);
-            totalCart += item.price;
-        }
-    })
+        // Add title
+        let title = document.createElement('h2');
+        title.innerText = "Récapitulatif de votre commande : ";
+        cmdContainer[0].appendChild(title);
 
-    // claculate and display total
-    let pTotal = document.createElement('p');
-    pTotal.innerText = `Total de votre commande : ${totalCart} euros`;
-    cmdContainer[0].appendChild(pTotal);
+        // Add a list to display cart elements
+        let ul = document.createElement('ul');
+        cmdContainer[0].appendChild(ul);
+        cmd.forEach(item => {
+            if (item.quantity > 0) {
+                let li = document.createElement('li');
+                li.innerText = `${item.name} - ${item.price} euros X ${item.quantity}\n`
+                ul.appendChild(li);
+                totalCart += item.price;
+            }
+        })
+
+        // claculate and display total
+        let pTotal = document.createElement('p');
+        pTotal.innerText = `Total de votre commande : ${totalCart} euros`;
+        cmdContainer[0].appendChild(pTotal);
+    }
 }

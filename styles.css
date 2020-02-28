@@ -1,0 +1,72 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    display: flex;
+    width: 80vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-size: 1.6rem;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+a {
+    color: black;
+}
+
+nav {
+    display: flex;
+}
+
+nav>li {
+    list-style: none;
+    padding: 2rem;
+}
+
+table, th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+}
+
+/* Front Page */
+main {
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bigTitle {
+    font-size: 4rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.bigBtn {
+    text-decoration: none;
+    border-radius: 5%;
+    background-color: cornflowerblue;
+    padding: 1rem;
+    margin: .5rem;
+}
+
+.bigBtn:hover {
+    background-color: darkcyan;
+}
+
+input.bigBtn {
+    border: none;
+}
